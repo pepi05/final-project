@@ -1,0 +1,22 @@
+@import "global.css";
+
+.inputCal {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #A5A5A5;
+    background: #f0efea 0% 0% no-repeat padding-box;
+    background-clip: padding-box;
+    border: 1px solid #A5A5A5;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-colo .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.react-datepicker-wrapper {
+    width:100%;
+}

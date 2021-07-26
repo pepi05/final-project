@@ -1,0 +1,49 @@
+a:link,
+a:visited {
+    text-decoration: none;
+    color: var(--midgrey);
+}
+
+li {
+    list-style: none;
+    text-transform: uppercase;
+    margin-right: 15px;
+}
+
+.logo-box {
+    position: relative;
+}
+
+.logo {
+    font-family: "Roboto Slab", serif;
+    font-weight: 900;
+    font-size: 2.7rem;
+    color: var(--darkgrey);
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.logo-span {
+    font-family: "Roboto Slab", serif;
+    font-weight: 900;
+    font-size: 17px;
+    color: var(--orange);
+    position: absolute;
+    top: 75%;
+    left: 18%;
+}
+
+.logo-container {
+    padding: 0;
+}
+
+.row-items {
+    align-items: center;
+    margin-left: 0;
+}
+
+
