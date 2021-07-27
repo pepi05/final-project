@@ -19,19 +19,16 @@ mongoose.connect(`${process.env.MONGO_URL}`, {
 app.use(jwt({
     secret: process.env.AUTH_SECRET_KEY,
     algorithms: ['HS256']
-}).unless({
+  }).unless({
     path: [
-        {
-            url: '/auth/register', methods: ['POST']
-        },
-        {
-            url: '/auth/login', methods: ['POST']
-        },
-        {
-            url: '/auth/loginform', methods: ['GET']
-        }
+      {
+        url: '/auth/register', methods: ['POST']
+      },
+      {
+        url: '/auth/login', methods: ['POST']
+      }
     ]
-}))
+  }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {

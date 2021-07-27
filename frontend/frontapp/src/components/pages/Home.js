@@ -40,7 +40,7 @@ const Home = () => {
 
   return (
     <div>
-      <Dashboard />
+      <Dashboard title1="Fresh & New" title2="Most Popular Recipes" />
     </div>
   );
 };

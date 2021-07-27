@@ -6,7 +6,7 @@ const Logo = ({ color }) => {
     return (
         <Container>
         <div className='logo-container'>
-        <Link to="/mainpage" className={`logo-box logo-box-${color}`}>
+        <Link to="/" className={`logo-box logo-box-${color}`}>
             <div className="logo">Baby's </div>
             <div className="logo-span">food place</div>
             

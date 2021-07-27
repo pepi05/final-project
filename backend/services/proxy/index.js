@@ -1,9 +1,12 @@
 const express = require('express');
 const proxy = require('express-http-proxy');
 
+
 const app = express();
 
 require('dotenv').config();
+
+
 
 app.use('/recipes', proxy(
     `http://localhost:${process.env.RECIPE_PORT}`, {

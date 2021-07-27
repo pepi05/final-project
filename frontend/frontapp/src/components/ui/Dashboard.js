@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import "../../assets/styles/dashboard.css";
 import RouteHeader from "../widgets/routeheader";
 
-function Dashboard(props) {
+const Dashboard = (props) => {
   const [freshItems, setFreshItems] = useState([]);
   const [popularItems, setPopularItems] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -61,7 +61,7 @@ const handleHide = () => setShow(false)
 return (
     <Container>
       <div id="asd1">
-      <RouteHeader title="Fresh & New" />
+      <RouteHeader title={props.title1} />
         {isDataFetched &&
           freshItems.map((x, index) => {
             return (
@@ -139,7 +139,7 @@ return (
       </div>
 
       <div id="asd1">
-      <RouteHeader title="Most Popular Recipes" />
+      <RouteHeader title={props.title2} />
       {isPopularDataFetched &&
           popularItems.map((x, index) => {
             return (

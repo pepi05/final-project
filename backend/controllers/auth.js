@@ -47,7 +47,7 @@ module.exports = {
         })
 
         res.cookie('token', token, { httpOnly: true });
-        
+        // res.send(token)
         successResponse(res, 'JWT successfully generated', token);
         } catch (error) {
             errorResponse(res, 500, error);

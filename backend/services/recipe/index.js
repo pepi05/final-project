@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const recipesRouter = require('./routes/recipes');
+const myRecipesRouter = require('./routes/myRecipes');
 
 const errorResponse = require('../../lib/responses/errorResponse');
 
@@ -25,6 +26,7 @@ app.use((err, req, res, next) => {
 })
 
   app.use('/recipes', recipesRouter);
+  app.use('/my-recipes', myRecipesRouter)
 
   app.listen(process.env.RECIPE_PORT, () => {
     console.log(`Recipes app is started on port ${process.env.RECIPE_PORT}`);

@@ -6,6 +6,6 @@ router.post('/register', controller.register)
       .post('/login', controller.login)
       .get('/logout', controller.logout)
       .patch('/:userId', controller.patchUpdate)
-      .get('/loginform')
+      
 
 module.exports = router;
