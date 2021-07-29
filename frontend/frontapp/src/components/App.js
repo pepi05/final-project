@@ -17,20 +17,48 @@ import Brunch from "./pages/Brunch";
 import Breakfast from "./pages/Breakfast";
 import MyProfile from "./pages/MyProfile";
 import MyRecipes from "./pages/MyRecipes";
-// import CreateRecipe from "./pages/CreateRecipe";
 
+// import CreateRecipe from "./pages/CreateRecipe";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const App = () => {
+    const [user, setUser] = useState('')
+    const config = {
+      Headers: {
+        Authrization: 'Bearer ' + localStorage.getItem('token')
+      }
+    }
+   
+     useEffect(() => {
+   
+       axios.get('auth/user', config)
+       .then((response) => {
+        setUser({
+          first_name: response.data.first_name,
+          user_id: response.data._id
+        })
+        
+        .then((response) => {
+          // setUser(response.data.first_name)
+        })
+       // console.log('responsot na userot e:', response.data.first_name);
+       })
+       .catch((err) => console.log(err))
+     }, [])
+
     return (
+        
         <BrowserRouter>
+        
         <div className="App">
-            <Header />
+            <Header user={user} setUser={setUser} />
                 <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={() => <Home user={user}  />} />
 
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/login" component={() => <Login user={user} setUser={setUser} />}  />
 
-                <Route exact path="/register" component={Register} />
+                <Route exact path="/register" component={Register}  />
 
                 {/* <Route exact path="/create" component={Recipe} /> */}
 
@@ -42,11 +70,11 @@ const App = () => {
 
                 <Route exact path="/recipes/brunch" component={Brunch} />
 
-                <Route exact path="/my-recipes" component={MyRecipes} />
+                <Route exact path="/my-recipes" component={() => <MyRecipes user={user} setUser={setUser}/>}  />
 
                 {/* <Route path="/my-recipes/create" component={CreateRecipe} /> */}
 
-                <Route exact path="/my-profile" component={MyProfile} />
+                <Route exact path="/my-profile" component={MyProfile}/>
 
                 </Switch>
 

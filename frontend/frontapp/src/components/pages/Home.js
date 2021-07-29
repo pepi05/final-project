@@ -4,43 +4,31 @@ import { useState, useEffect } from 'react';
 import RouteHeader from '../widgets/routeheader';
 import Dashboard from "../ui/Dashboard";
 import FreshNewRecipes from '../ui/FreshNewRecipes';
+import { Component } from 'react';
 
-const Home = () => {
-  // useEffect(() => {
-  //   fetchFresh();
-  // }, []);
+const Home = (props) => {
 
   // useEffect(() => {
-  //   fetchPopular();
+  //   (
+  //     async () => {
+  //       await fetch('/auth/user', {
+  //         headers: {'Content-Type': 'application/json'},
+  //         credentials: 'include',
+  //       })
+  //     }
+  //   )();
   // },[])
 
-  // const [freshItems, setFreshItems] = useState([]);
-  // const [popularItems, setPopularItems] = useState([]);
 
-  // const fetchFresh = async () => {
-  //   await axios.get('/mainpage/fresh')
-  //   .then((response) => {
-  //     const data = response.data;
-  //     console.log('New items', data);
-  //     setFreshItems(data);
-  //   })
-  // };
 
-  // const fetchPopular = async () => {
-  //   await axios.get('/mainpage/popular')
-  //   .then((response) => {
-  //     const data = response.data;
-  //     console.log(data);
-  //     setPopularItems(data);
-  //   })
-  // };
-
-  
 
 
   return (
     <div>
       <Dashboard title1="Fresh & New" title2="Most Popular Recipes" />
+
+      {props.user ? 'Hi' +  props.user.first_name + props.user.user_id : 'You are not authenticated'}
+      
     </div>
   );
 };

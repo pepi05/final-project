@@ -1,4 +1,4 @@
-import { Button, Card, Container, Modal, Col } from "react-bootstrap";
+import { Button, Card, Container, Modal, Col, Row} from "react-bootstrap";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "../../assets/styles/dashboard.css";
@@ -46,8 +46,8 @@ const Dashboard = (props) => {
 const [dataModal, setDataModal] = useState([]);
 const [show, setShow] = useState(false);
 
-const dataOut = (title, description) => {
-    let oneCard = [title, description];
+const dataOut = (title, description, category, preparation_time, people, likes, recipe) => {
+    let oneCard = [title, description, category, preparation_time, people, likes, recipe];
     setDataModal((x) => [ ...oneCard]);
 
     return setShow(true);
@@ -80,7 +80,7 @@ return (
                     variant="success"
                     className="cardButton"
                     onClick={() => {
-                      dataOut(x.title, x.description);
+                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
                     }}
                   >
                      <i class="bi bi-arrow-right-short"></i>
@@ -115,27 +115,7 @@ return (
               </Col>
             );
           })}
-        {show ? (
-          <Modal show={show}>
-            <Modal.Header>
-              <Modal.Title>{dataModal[0]}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <>
-                <p>{dataModal[1]}</p>
-              </>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleHide}>
-                Close Modal
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        ) : (
-          ""
-        )}
-
-        
+  
       </div>
 
       <div id="asd1">
@@ -158,7 +138,7 @@ return (
                     variant="success"
                     className="cardButton"
                     onClick={() => {
-                      dataOut(x.title, x.description);
+                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
                     }}
                   >
                      <i class="bi bi-arrow-right-short"></i>
@@ -197,16 +177,53 @@ return (
           <Modal show={show}>
             <Modal.Header>
               <Modal.Title>{dataModal[0]}</Modal.Title>
+              <Button  onClick={handleHide}>
+                Close Modal
+              </Button>
             </Modal.Header>
             <Modal.Body>
+            <Container>
+          <Row>
+            <Col xs={6}>
+              <Row>
+               {/* 
+               ---------
+               da ja napravam dinamicka slikata */}
+              <Card.Img
+                  variant="top"
+                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  className="fluid"
+                />
+              </Row>
+              <Row>Best Servet for {dataModal[2]}</Row>
+              <Row className="recipeDetailsText"><p>{dataModal[1]}</p></Row>
+              
+            </Col>
+            <Col xs={6}>
+              <Row>Recipe details</Row>
+              <Row className="recipeDetailsText"><p>{dataModal[6]}</p></Row>
+            </Col>
+         
+          </Row>
+        </Container>
+
+
               <>
-                <p>{dataModal[1]}</p>
+                
               </>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleHide}>
-                Close Modal
-              </Button>
+              <Row className="modal-footer">
+             {/* <Col> <i class="bi bi-clock"> <span> {dataModal[3]} min</span></i> </Col>
+             <Col><i class="bi bi-clock"> <span> {dataModal[4]} min</span></i>  </Col>
+             <Col><i class="bi bi-clock"> <span> {dataModal[5]} min</span></i> </Col> */}
+
+             <span> <i class="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
+             <i class="bi bi-people"> <span> {dataModal[4]} min</span></i>  
+             <i class="bi bi-star"> <span> {dataModal[5]} min</span></i> 
+              </span>
+            </Row>
+                
             </Modal.Footer>
           </Modal>
         ) : (

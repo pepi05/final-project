@@ -2,27 +2,51 @@ import { Form, Row, Col, Container } from "react-bootstrap";
 import Button from '../widgets/GreenButton';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
-
-const LoginForm = () => {
+const LoginForm = (props) => {
 const [form, setForm] = useState({
   email: '',
   password: ''
 });
 
-const submitForm = (event) => {
+const [redirect, setRedirect] = useState(false);
+
+
+
+
+const submitForm = async (event) => {
   event.preventDefault();
-  // const loginInfo = {
-  //   email: form.email,
-  //   password: form.password
-  // }
-  // console.log(loginInfo)
+  
+
   const submitLogin = async () => {
    await axios.post('/auth/login', form)
+  .then((response) => {
+    // console.log('responsot ee: ', response);
+    localStorage.setItem('token', response.data.data)
+  })
+ 
+   
+  
+   .catch(err => console.log(err))
   }
-  submitLogin()
-  console.log(form);
+   submitLogin()
+   setRedirect(true)
+   
+   
+
 }
+
+
+
+  if (redirect) {
+    
+    return  <Redirect to="/" />
+  }
+
+
+
+
 
  
 
@@ -58,6 +82,15 @@ const handleChange = (event) => {
   //   })
   // }
   return (
+    <Container>
+    <Row>
+      <Col md={6}>
+      <h3 id="orangeTitle">Welcome to <span id="blackTitle"> Baby's </span> </h3>
+            <p>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+      </Col>
+
+      <Col md={6}>
+      <div className="loginForm">
     <form onSubmit={submitForm}>
     <input
         type='text'
@@ -73,8 +106,12 @@ const handleChange = (event) => {
         value={form.password}
         onChange={handleChange}
     />
-    <button type='submit' className='submit-button'>Sign In</button>
+    <button type='submit' className='submit-button'>Log In</button>
 </form>
+</div>
+      </Col>
+    </Row>
+    </Container>
   )
 
 //   return (

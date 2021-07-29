@@ -5,7 +5,7 @@ const controller = require('../../../controllers/recipes')
 router
       .get('/', controller.fetchAllRecipes)
       .get('/:id', controller.fetchOneRecipe)
-      .post('/', controller.createRecipe)
+      // .post('/', controller.createRecipe)
       .put('/:id', controller.putUpdateRecipe)
       .delete('/:id', controller.deleteRecipe)
 

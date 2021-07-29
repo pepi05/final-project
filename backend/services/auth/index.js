@@ -4,8 +4,16 @@ const mongoose = require('mongoose');
 const authRouter = require('./router');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/responses/errorResponse');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
+
+app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +34,12 @@ app.use(jwt({
       },
       {
         url: '/auth/login', methods: ['POST']
+      },
+      {
+        url: '/auth/user', methods: ['GET']
+      },
+      {
+        url: '/auth/:userId', methods: ['PUT']
       }
     ]
   }));

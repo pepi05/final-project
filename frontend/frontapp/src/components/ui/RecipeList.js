@@ -2,7 +2,8 @@ import '../../assets/styles/myRecipes.css';
 import { Button, Container } from 'react-bootstrap';
 
 const RecipeList = (props) => {
-    
+    console.log('listaaaaaaaaaaa', props.list);
+    console.log('userIDDDDD', props.user_id);
 
     return (
         <div>
@@ -19,53 +20,35 @@ const RecipeList = (props) => {
                     </tr>
                 </thead>
                     <tbody>
-                        
-                    {props.list.map((listItem, index) => {
-             return   <tr className="custom-spacing py-5">
-                     <td className="py-3 color-tr font-weight-bold" key={listItem.id}> {listItem.recipeTitle} </td>
-                     <td className="py-3 color-tr" key={listItem.id}>
+                  
+                { props.list.map(item => {
+                    
+                   {if (item.user === props.user_id) {
+                    return <tr className="custom-spacing py-5"> 
+                         <td className="py-3 color-tr font-weight-bold">{item.title}</td> 
+                         <td className="py-3 color-tr">
                          <Button className="custum-font-size-12 custom-btn font-weight-bold">
-                         {listItem.category} 
-                         {/* .toUpperCase() */}
-                        </Button> 
-                    </td>
-                     <td className="py-3 color-tr font-weight-bold" key={listItem.id}> {listItem.createdOn} </td>
-                     <td className="py-3 color-tr"></td>
-                     <td className="py-3 color-tr"></td>
-                     <td className="py-3 color-tr">
-                     <button className="custom-style"> Delete </button>
-                    </td>
-          
-        
-             </tr>
-             
+                         {item.category} 
                         
-             })}
-             
-                    </tbody>
-            </table>
+                        </Button> 
+                         </td>
+                         <td className="py-3 color-tr font-weight-bold">{item.createdAt}</td>
+                         
+                        <td className="py-3 color-tr"></td>
+                        <td className="py-3 color-tr"></td>
+                        <td className="py-3 color-tr">
+                        <button className="custom-style"> Delete </button>
+                        </td>
 
+                          </tr>
+                           }
+                        }
+                     })}
+                </tbody>
+                </table>
             </Container>
         </div>
-
-
-
-
-//         <div>
-// <ul>
-// {props.list.map((listItem, index) => {
-//              return    <li key={listItem.id}> {listItem.recipeTitle} {listItem.category} {listItem.createdOn} </li>
-//             })}
-// </ul>
-
-//         </div>
-        
-        
-            
-          
-        
-        
-    )
+)
 }
 
 export default RecipeList;

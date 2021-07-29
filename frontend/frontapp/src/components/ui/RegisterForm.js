@@ -4,6 +4,7 @@ import Button from '../widgets/GreenButton';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import { Redirect } from "react-router-dom";
 
 const RegisterForm = (props) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -17,11 +18,11 @@ const RegisterForm = (props) => {
     repeat_password: ''
   } );
 
-  
+  const [redirect, setRedirect] = useState(false)
 
   const submitForm = (event) => {
     event.preventDefault()
-
+console.log('formata e',form.first_name, form.last_name, form.birthday, form.password);
     // const registered = {
     //   firstName: form.firstName,
     //   lastName: form.lastName,
@@ -34,12 +35,17 @@ const RegisterForm = (props) => {
     const postRegister = async () => {
 
    
-      await axios.post('/auth/register', form)
+      await axios.post('/auth/register', form,)
       .then(response => console.log(response.data))
 
 
     }
-    postRegister() 
+    postRegister()
+    setRedirect(true) 
+  }
+
+  if(redirect) {
+    return <Redirect to="/login"/>
   }
 
   
@@ -53,7 +59,7 @@ const RegisterForm = (props) => {
       }  
       
     })
-    console.log(form); 
+    // console.log(form); 
   }
 
 const birthdayChange = () => {
@@ -66,6 +72,15 @@ setForm(state => {
 }
 
 return (
+  <Container>
+  <Row>
+    <Col md={4}>
+      <h3 id="orangeTitle">Create your <p id="blackTitle"> account</p></h3 >
+      <p>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
+    </Col>
+    <Col md={8}>
+    
+    <div className="registerForm">
   <form onSubmit={submitForm}>
   <input
       type='text'
@@ -103,8 +118,13 @@ return (
         value={form.repeat_password}
         onChange={handleChange}
     />
-  <button type='submit' className='submit-button'>Sign In</button>
+  <button type='submit' className='submit-button'>Create account</button>
 </form>
+
+</div>
+          </Col>
+        </Row>
+        </Container>
 )
 
 }

@@ -33,6 +33,10 @@ const recipeSchema = mongoose.Schema({
         type: Number,
         default: 0,
       },
+      createdAt: {
+          type: String,
+          default: new Date().toLocaleDateString()
+      }
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema);

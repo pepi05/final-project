@@ -5,6 +5,7 @@ const recipesRouter = require('./routes/recipes');
 const myRecipesRouter = require('./routes/myRecipes');
 
 const errorResponse = require('../../lib/responses/errorResponse');
+const jwt = require('express-jwt');
 
 require('dotenv').config();
 
@@ -17,7 +18,17 @@ mongoose.connect(`${process.env.MONGO_URL}`, {
     useCreateIndex: true,
   });
 
-
+  app.use(jwt({
+    secret: process.env.AUTH_SECRET_KEY,
+    algorithms: ['HS256']
+  }).unless({
+    path: [
+      {
+        url: '/recipes', methods: ['GET']
+      }
+     
+    ]
+  }));
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {

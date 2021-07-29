@@ -3,6 +3,7 @@ const errorResponse = require('../lib/responses/errorResponse');
 const successResponse = require('../lib/responses/successResponse');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 module.exports = {
     register: async (req, res) => {
@@ -46,14 +47,15 @@ module.exports = {
             expiresIn: '60m'
         })
 
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 1000 });
         // res.send(token)
-        successResponse(res, 'JWT successfully generated', token);
+        successResponse(res, 'JWT successfully generated',  token);
+        // res.send({token, payload})
         } catch (error) {
             errorResponse(res, 500, error);
         }
     },
-    logout: (req, res) => {
+    logout:  (req, res) => {
         try {
             res.cookie('token', '', { maxAge: 1 });
             successResponse(res, 'Logged out');
@@ -61,13 +63,45 @@ module.exports = {
            errorResponse(res, 500, error);
         }
     },
-    patchUpdate: async (req,res) => {
+    putUpdate: async (req,res) => {
         try {
-            const newUser = await User.findByIdAndUpdate(req.params.userId, req.body)
+          
+            const newUser = await User.findOneAndReplace( { _id: req.params.userId }, {
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                email: req.body.email,
+                birthday: req.body.birthday,
+                password: bcrypt.hashSync(req.body.password)  ,
+                repeat_password: req.body.repeat_password
+            } )
+
+
             successResponse(res, 'User is successfully updated')    
         } catch (error) {
             errorResponse(res, 500, error);
+        } 
+    },
+    fetchUser: async (req, res) => {
+        try {
+           const cookie = req.cookies['token']
+
+            const claims = jwt.verify(cookie, process.env.AUTH_SECRET_KEY)
+
+            if (!claims) {
+                return res.status(401).send({
+                    message: 'unauthenticated'
+                })
+            }
+
+            const user = await User.findById(claims.id)
+
+            // const {password, ...data} = await user
+            // res.send(data)
+           res.send(user)
+        } catch (error) {
+            errorResponse(res, 500, error)
         }
-      
+       
     }
+   
 }

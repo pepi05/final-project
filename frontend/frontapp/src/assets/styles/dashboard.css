@@ -61,3 +61,12 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.modal-footer {
+  justify-content: flex-start;
+  border-top:0;
+}
+
+.recipeDetailsText {
+  overflow-wrap: anywhere;
+}

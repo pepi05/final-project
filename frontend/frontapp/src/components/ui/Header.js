@@ -6,9 +6,12 @@ import NavItem from "../widgets/navmenu/NavItem";
 import Navigation from "../widgets/navmenu/nav";
 import Button from '../widgets/GreenButton'
 
-const Header = () => {
-    const [user, setUser] = useState(false);
+const Header = (props) => {
+  let user = props.user
+  let setUser = props.setUser
+  
 
+  
    
  
     return ( 
@@ -22,9 +25,9 @@ const Header = () => {
             <Col xs={2} md={6}>
             <Navigation />
               </Col> 
-              {user ? 
+              {!(user === '') ? 
                 <Col xs={4} md={4}>
-                  <NavItem />
+                  <NavItem user={user} setUser={setUser} />
                 </Col>
                   :
                   <>

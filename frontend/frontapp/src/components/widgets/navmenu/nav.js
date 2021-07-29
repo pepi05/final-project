@@ -1,13 +1,14 @@
 import { Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
    return (
        <>
             <Nav>
-                  <Nav.Link href='/recipes/breakfast'>BREAKFAST</Nav.Link>
-                  <Nav.Link href='/recipes/brunch'>BRUNCH</Nav.Link>
-                  <Nav.Link href='/recipes/lunch'>LUNCH</Nav.Link>
-                  <Nav.Link href='/recipes/dinner'>DINNER</Nav.Link>
+                  <Link to='/recipes/breakfast'>BREAKFAST</Link>
+                  <Link to='/recipes/brunch'>BRUNCH</Link>
+                  <Link to='/recipes/lunch'>LUNCH</Link>
+                  <Link to='/recipes/dinner'>DINNER</Link>
             </Nav>
        </>
    )
