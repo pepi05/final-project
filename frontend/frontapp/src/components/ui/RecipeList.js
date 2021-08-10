@@ -1,10 +1,8 @@
 import '../../assets/styles/myRecipes.css';
 import { Button, Container } from 'react-bootstrap';
+import axios from 'axios';
 
 const RecipeList = (props) => {
-    console.log('listaaaaaaaaaaa', props.list);
-    console.log('userIDDDDD', props.user_id);
-
     return (
         <div>
             <Container>
@@ -21,8 +19,7 @@ const RecipeList = (props) => {
                 </thead>
                     <tbody>
                   
-                { props.list.map(item => {
-                    
+                { props.list.map(item => {  
                    {if (item.user === props.user_id) {
                     return <tr className="custom-spacing py-5"> 
                          <td className="py-3 color-tr font-weight-bold">{item.title}</td> 
@@ -37,9 +34,18 @@ const RecipeList = (props) => {
                         <td className="py-3 color-tr"></td>
                         <td className="py-3 color-tr"></td>
                         <td className="py-3 color-tr">
-                        <button className="custom-style"> Delete </button>
+                        <button className="custom-style" onClick={async () => {
+                            const itemId = item._id;
+                            console.log('info za item', itemId);
+                            await axios.delete(`/recipes/${item._id}`)
+                            .then((response) => {
+                                console.log(response.data);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                        }}> Delete </button>
                         </td>
-
                           </tr>
                            }
                         }

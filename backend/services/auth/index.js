@@ -18,10 +18,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+mongoose.set('useFindAndModify', false);
+
 mongoose.connect(`${process.env.MONGO_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  
 });
 
 app.use(jwt({
@@ -49,7 +52,6 @@ app.use((err, req, res, next) => {
         errorResponse(res, 401, new Error('You are not logged in'));
     }
 })
-
 
 app.use('/auth', authRouter)
 

@@ -8,5 +8,4 @@ router.post('/register', controller.register)
       .put('/:userId', controller.putUpdate)
       .get('/user', controller.fetchUser)
       
-
 module.exports = router;

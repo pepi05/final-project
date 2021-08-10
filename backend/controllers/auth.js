@@ -3,7 +3,6 @@ const errorResponse = require('../lib/responses/errorResponse');
 const successResponse = require('../lib/responses/successResponse');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 
 module.exports = {
     register: async (req, res) => {
@@ -25,7 +24,6 @@ module.exports = {
             errorResponse(res, 500, error);
         }
     },
-
     login: async (req, res) => {
         try {
             const user = await User.findOne({ email: req.body.email });
@@ -48,9 +46,7 @@ module.exports = {
         })
 
         res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 1000 });
-        // res.send(token)
         successResponse(res, 'JWT successfully generated',  token);
-        // res.send({token, payload})
         } catch (error) {
             errorResponse(res, 500, error);
         }
@@ -74,8 +70,6 @@ module.exports = {
                 password: bcrypt.hashSync(req.body.password)  ,
                 repeat_password: req.body.repeat_password
             } )
-
-
             successResponse(res, 'User is successfully updated')    
         } catch (error) {
             errorResponse(res, 500, error);
@@ -84,7 +78,6 @@ module.exports = {
     fetchUser: async (req, res) => {
         try {
            const cookie = req.cookies['token']
-
             const claims = jwt.verify(cookie, process.env.AUTH_SECRET_KEY)
 
             if (!claims) {
@@ -94,14 +87,9 @@ module.exports = {
             }
 
             const user = await User.findById(claims.id)
-
-            // const {password, ...data} = await user
-            // res.send(data)
            res.send(user)
         } catch (error) {
             errorResponse(res, 500, error)
         }
-       
     }
-   
 }

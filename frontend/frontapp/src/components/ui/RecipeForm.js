@@ -1,12 +1,8 @@
 import { Container, Row, Col, Figure, Form } from "react-bootstrap";
-import { useState } from 'react';
 import Button from '../widgets/GreenButton';
 
-
 const RecipeForm = (props) => {
-
     return (
-  
         <form className='recipe-form' onSubmit={props.submitForm}>
         <Container>
             <Row>
@@ -16,8 +12,7 @@ const RecipeForm = (props) => {
                         width={171}
                         height={180}
                         alt="171x180"
-                        src="../pizza.png"
-                        
+                        src="../pizza.png" 
                       />
                   </Figure>
               <Button className={"whiteButton"} text="UPLOAD IMAGE"  variant={"light"} />
@@ -74,21 +69,12 @@ const RecipeForm = (props) => {
   </Form.Group>
   
       </Row>
-      
-              </Col>
-              
+              </Col> 
             </Row>
           
             <button type="submit">Add</button>
             </Container>
             </form>
-
-
-
-
-
-
-    
     )
 }
 

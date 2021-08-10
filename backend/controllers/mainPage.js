@@ -10,7 +10,6 @@ module.exports = {
             const latest = recipes.reverse();
             const fresh = await latest.slice(0, 3);
             res.send(fresh)
-            // successResponse(res, 'Fresh and New recipes are fetched', fresh);    
         } catch (error) {
             errorResponse(res, 500, error);
         }
@@ -23,7 +22,6 @@ module.exports = {
             });
             const popularSix = sorted.slice(0,6);
             res.send(popularSix);
-            // successResponse(res, 'Most popular 6 recipes list', popularSix);
         } catch (error) {
             errorResponse(res, 500, error);
         } 

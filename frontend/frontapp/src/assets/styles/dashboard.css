@@ -70,3 +70,19 @@
 .recipeDetailsText {
   overflow-wrap: anywhere;
 }
+
+.green-text {
+  color: #96BB36;
+  font-size: 18px;
+}
+
+.orange-title {
+  font-size: 38px;
+  color: #F0972A;
+}
+
+.close-button {
+  font-size: 16px;
+  background-color: white ;
+  border: none;
+}

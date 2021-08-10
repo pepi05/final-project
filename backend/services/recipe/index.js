@@ -12,6 +12,8 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+mongoose.set('useFindAndModify', false);
 mongoose.connect(`${process.env.MONGO_URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -25,8 +27,19 @@ mongoose.connect(`${process.env.MONGO_URL}`, {
     path: [
       {
         url: '/recipes', methods: ['GET']
+      },
+      {
+        url: '/recipes/breakfast', methods: ['GET']
+      },
+      {
+        url: '/recipes/brunch', methods: ['GET']
+      },
+      {
+        url: '/recipes/lunch', methods: ['GET']
+      },
+      {
+        url: '/recipes/dinner', methods: ['GET']
       }
-     
     ]
   }));
 

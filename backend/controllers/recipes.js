@@ -10,7 +10,6 @@ module.exports = {
         } catch (error) {
             errorResponse(res, 500, error);
         }
-
     },
     fetchAllRecipes: async (req, res) => {
         try {
@@ -18,28 +17,23 @@ module.exports = {
             successResponse(res, 'Recipes list', recipes);
         } catch (error) {
             errorResponse(res, 500, error);
-        }
-       
+        }   
     },
-
     fetchOneRecipe: async (req, res) => {
         try {
             const recipe = await Recipe.findById(req.params.id);
             successResponse(res, 'Recipe is fetched', recipe)  
         } catch (error) {
             errorResponse(res, 500, error);
-        }
-        
+        }   
     },
-
     putUpdateRecipe: async (req, res) => {
         try {
          await  Recipe.findOneAndReplace({ _id: req.params.id }, req.body);
             successResponse(res, `Recipe with id ${req.params.id} is successfully updated`); 
         } catch (error) {
             errorResponse(res, 500, error);
-        }
-      
+        } 
     },
     deleteRecipe: async (req, res) => {
         try {
@@ -53,19 +47,27 @@ module.exports = {
         try {
             const recipe = await Recipe.findById(req.params.id);
             const likedRecipe = await Recipe.findByIdAndUpdate(req.params.id, { likes: recipe.likes + 1 }, { new: true });
-            successResponse(res, `recipe with id ${req.params.id} is liked`);
+            successResponse(res, `recipe with id ${req.params.id} is liked`, likedRecipe);
         } catch (error) {
             errorResponse(res, 500, error);
         }
     },
-
+    dislikeRecipe: async (req, res) => {
+        try {
+            const recipe = await Recipe.findById(req.params.id);
+            const dislikedRecipe = await Recipe.findByIdAndUpdate(req.params.id, { likes: recipe.likes -1 }, { new: true });
+            successResponse(res, `recipe with id ${req.params.id} is disliked`, dislikedRecipe)
+        } catch (error) {
+            errorResponse(res, 500, error)
+        }
+        
+    },
     getBreakfast: async (req, res) => {
         try {
             const recipes = await Recipe.find({
                 category: 'breakfast'
             });
             res.send(recipes);
-            // successResponse(res, 'Recipes list', recipes);
         } catch (error) {
             errorResponse(res, 500, error);
         }
@@ -76,7 +78,6 @@ module.exports = {
             const recipes = await Recipe.find({
                 category: 'brunch'
             });
-            // successResponse(res, 'brunch recipes', recipes);
             res.send(recipes);
         } catch (error) {
             errorResponse(res, 500, error);
@@ -88,7 +89,6 @@ module.exports = {
             const recipes = await Recipe.find({
                 category: 'lunch'
             });
-            // successResponse(res, 'lunch recipes', recipes); 
             res.send(recipes);
         } catch (error) {
             errorResponse(res, 500, error);
@@ -99,11 +99,9 @@ module.exports = {
             const recipes = await Recipe.find({
                 category: 'dinner'
             });
-            // successResponse(res, 'dinner recipes', recipes); 
             res.send(recipes);
         } catch (error) {
             errorResponse(res, 500, error)
         }
     }
-
 }

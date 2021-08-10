@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../../assets/styles/nav.css";
 import { Navbar, Container, Col, Row } from 'react-bootstrap';
 import Logo from '../widgets/Logo';
@@ -9,13 +8,8 @@ import Button from '../widgets/GreenButton'
 const Header = (props) => {
   let user = props.user
   let setUser = props.setUser
-  
 
-  
-   
- 
     return ( 
- 
         <>
       <Container>
         <Row className='row-items'>
@@ -37,21 +31,11 @@ const Header = (props) => {
                   <Button className={"greenButton"} text="Create account" where={"/register"} variant={"success"} />
                      </Col>
                   </>
-              
-
               }
-
         </Row>
-      </Container>
-  
+      </Container> 
 </>
     )
 }
-
-
-
-
-
-
 
 export default Header;

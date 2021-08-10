@@ -14,8 +14,6 @@ const logout = async () => {
 
     return (
         <>
-  
-    
   <Nav className="justify-content-end" >
     <Nav.Item>
       <Nav.Link href="/my-recipes">My recipes</Nav.Link>

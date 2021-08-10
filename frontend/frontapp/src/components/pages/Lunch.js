@@ -9,7 +9,6 @@ const Lunch = () => {
             <MiniDashboard category= 'lunch' />
         </div>
     )
-
 }
 
 export default Lunch;

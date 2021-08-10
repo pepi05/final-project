@@ -16,7 +16,6 @@ const MiniDashboard = (props) => {
             await axios.get(`/recipes/${props.category}`)
             .then((response) => {
                 const data = response.data;
-                console.log(data);
                 setItems(data);
                 setIsDataFetched(true);
             })
@@ -37,18 +36,14 @@ const MiniDashboard = (props) => {
         
         const handleHide = () => setShow(false)
 
-
     return (
-      
-
-
  <Container>
       <div id="asd1">
         {isDataFetched &&
-          items.map((x, index) => {
+          items.map((x) => {
             return (
               <Col xs={12} sm={6} md={4}>
-              <Card className="card" key={index}>
+              <Card className="card" key={x.id}>
                 <Card.Img
                   variant="top"
                   src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
@@ -65,28 +60,25 @@ const MiniDashboard = (props) => {
                       dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
                     }}
                   >
-                     <i class="bi bi-arrow-right-short"></i>
-                  
-                     
+                     <i className="bi bi-arrow-right-short"></i>
                   </Button>
                   
                   <Card.Footer className="cardFooter">
                     {
                       <div>
-                        {/* <span className="material-icons">schedule</span> */}
-                        <i class="bi bi-clock"> <span> {x.preparation_time} minutes</span></i>
+                        <i className="bi bi-clock"> <span> {x.preparation_time} minutes</span></i>
                        
                       </div>
                     }
                     {
                       <div>
-                        <i class="bi bi-people"> <span> {x.people} persons</span></i>
+                        <i className="bi bi-people"> <span> {x.people} persons</span></i>
                         
                       </div>
                     }
                      {
                       <div>
-                        <i class="bi bi-star"><span>{x.likes}</span></i>
+                        <i className="bi bi-star"><span>{x.likes}</span></i>
                        
                       </div>
                     }
@@ -127,17 +119,15 @@ const MiniDashboard = (props) => {
          
           </Row>
         </Container>
-
-
               <>
                 <p>{dataModal[1]}</p>
               </>
             </Modal.Body>
             <Modal.Footer>
             <Row className="modal-footer">
-            <span> <i class="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
-             <i class="bi bi-people"> <span> {dataModal[4]} min</span></i>  
-             <i class="bi bi-star"> <span> {dataModal[5]} min</span></i> 
+            <span> <i className="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
+             <i className="bi bi-people"> <span> {dataModal[4]} min</span></i>  
+             <i className="bi bi-star"> <span> {dataModal[5]} min</span></i> 
               </span>
             </Row>
 
@@ -146,8 +136,6 @@ const MiniDashboard = (props) => {
         ) : (
           ""
         )}
-
-        
       </div>
       </Container> 
     )
