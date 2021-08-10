@@ -2,13 +2,10 @@
 
 .loginForm {
   height: 100%;
-
   padding: 0;
   margin-left: 20%;
   margin-right: 30%;
-  /* margin-top: 10%; */
   border-radius: px;
-  
 }
 
 .loginForm form {
@@ -62,7 +59,6 @@ p {
 }
 
 #blackTitle {
- 
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold)
       46px/60px var(--unnamed-font-family-roboto-slab);
     letter-spacing: var(--unnamed-character-spacing-0);
@@ -71,15 +67,9 @@ p {
     font: normal normal bold 46px/60px Roboto Slab;
     letter-spacing: 0px;
     color: #626262;
-  
 }
 
-
 .greenButton {
-  /* top: 40.56rem;
-  left: 53.25rem;
-  width: 7.688rem;
-  height: 2.5rem; */
   padding: 10px 30px;
   background: var(--green) 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
@@ -144,7 +134,6 @@ color: #A5A5A5;
   opacity: 1;
   border: 1px solid #a5a5a5;
 }
-
 
 .avatar-image {
   

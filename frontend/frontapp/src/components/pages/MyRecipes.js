@@ -1,31 +1,42 @@
 import RouteHeader from "../widgets/routeheader";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RecipeForm from "../ui/RecipeForm";
 import RecipeList from "../ui/RecipeList";
+import axios from 'axios';
 
+const MyRecipes = (props) => {
+    const user_id = props.user.user_id;
+    useEffect(() => {
+        axios.get('/recipes')
+        .then((response) => {
+            setList(response.data.data);
+            console.log('response od receptite: ',response.data.data);
+            console.log('propsot: ', props.user.user_id);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    },[])
 
-
-const MyRecipes = () => {
     const [list, setList] = useState([
         {
-            recipeTitle: 'Homemade Pizza',
+            title: 'Homemade Pizza',
             category: 'Breakfast',
-            preparationTime: '5',
+            preparation_time: '5',
             people: '4',
-            shortDescription: 'asd dsa',
+            description: 'asd dsa',
             recipe: 'waaa',
-            createdOn: new Date().toLocaleDateString()
+            createdAt: new Date().toLocaleDateString()
           }],
     );
     const [form, setForm] = useState([
         {
-            recipeTitle: '',
+            title: '',
             category: '',
-            preparationTime: 0,
+            preparation_time: 0,
             people: 0,
-            shortDescription: '',
-            recipe: '',
-            createdOn: ''  
+            description: '',
+            recipe: ''
         }
      ] );  
   
@@ -33,27 +44,27 @@ const MyRecipes = () => {
       setForm(state => {
        return   {
            ...state,
-           [event.target.name]: event.target.value,
-           createdOn: new Date().toLocaleDateString()
-
+           [event.target.name]: event.target.value
        }
       } )
-     
   };
-  
-    const submitForm = (event) => {
-      event.preventDefault();
-      const newList =  list.concat(form);
-        
-      setList(newList);
-  
+ 
+    const submitForm = async (event) => {
+        event.preventDefault();
+          setList(form);
       
-      console.log('form', form);
-    };
-   
+        const submitRecipe = async () => {
+         await axios.post('/recipes', form)
+        .then((response) => {
+          console.log('submit recipe response:',response);
+        })
+         .catch(err => console.log(err))
+        }
+         submitRecipe()
+         console.log('fetchedId', props);
+      }
 
     const [isPlusClicked, setIsPlusClicked] = useState(false);
-
     const holdButtonClick = () => {
         setIsPlusClicked(state => {
             return !state
@@ -65,23 +76,17 @@ const MyRecipes = () => {
         <RouteHeader title='My Recipes' />
         {isPlusClicked ?
         <>
-        <button onClick={holdButtonClick}>back</button>
-            <RecipeForm submitForm={submitForm} handleChange={handleChange} form={form} />
+        <button><a href='/my-recipes' onClick={holdButtonClick}>-</a></button>
+            <RecipeForm handleChange={handleChange} form={form} submitForm={submitForm} />
             </>
             :
             <>
             <p>Recipes list</p>
             <button onClick={holdButtonClick}>+</button>
-            <RecipeList list={list} />
+            <RecipeList list={list}  user_id={user_id} />
             </>
         }
-     
         </>
-        // <div>
-        //     <RecipeForm submitForm={submitForm} handleChange={handleChange} form={form} />
-        //     <p>Recipes list</p>
-        //    <RecipeList list={list} />
-        // </div>
     )
 }
 

@@ -5,11 +5,9 @@ import { Container, Row, Col } from   'react-bootstrap';
 import "../../assets/styles/footer.css";
 
 const Footer = () => {
-    return (
-        
+    return ( 
 <footer className="footer">
-<Container>
-            {/* <div className="footer-box"> */}
+<Container>    
             <Row>
                 <Col sm={4}>
                 <Logo color="white" />
@@ -18,20 +16,13 @@ const Footer = () => {
                     <Nav />
                     </Col>
                 <Col sm={2} className="copyright">
-                
                     <p>
                         Baby's Food Place <br /> copyright &copy; 2021
                     </p>
-                
                 </Col>
-                
-            {/* </div> */}
             </Row>
-
             </Container>
-        </footer>
-        
-        
+        </footer>    
     );
 };
 

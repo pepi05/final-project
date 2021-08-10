@@ -37,12 +37,6 @@ app.use('/', proxy(
     }
 ));
 
-
-
-
-
-
-
 const PORT = 8080;
 app.listen(PORT, () => {
     console.log(`Proxy service successfully started on port ${PORT}`);
