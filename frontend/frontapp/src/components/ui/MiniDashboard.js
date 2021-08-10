@@ -5,12 +5,17 @@ import "../../assets/styles/dashboard.css";
 
 
 const MiniDashboard = (props) => {
+  const [dataModal, setDataModal] = useState([]);
+  const [show, setShow] = useState(false);
+  const [isStarClicked, setIsStarClicked] = useState(false);
+  const [items, setItems] = useState([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
     useEffect(() => {
             fetchBreakfast();
-        }, []);
+        }, [isDataFetched, isStarClicked, !isStarClicked]);
     
-        const [items, setItems] = useState([]);
-        const [isDataFetched, setIsDataFetched] = useState(false);
+       
     
         const fetchBreakfast = async () => {
             await axios.get(`/recipes/${props.category}`)
@@ -24,8 +29,8 @@ const MiniDashboard = (props) => {
             })
         }
 
-        const [dataModal, setDataModal] = useState([]);
-        const [show, setShow] = useState(false);
+
+
 
         const dataOut = (title, description, category, preparation_time, people, likes, recipe) => {
           let oneCard = [title, description, category, preparation_time, people, likes, recipe];
@@ -76,11 +81,46 @@ const MiniDashboard = (props) => {
                         
                       </div>
                     }
-                     {
+                                         { !isStarClicked ?
                       <div>
-                        <i className="bi bi-star"><span>{x.likes}</span></i>
+                        <i className="bi bi-star" onClick={ async () => {
+                          const postId = x._id;
+                          await axios.patch(`/recipes/${postId}/like`)
+                          .then((response) => {
+                           
+                          console.log('response za liked:',response.data.data.likes);
+                          
+                          })
+                          .then(() => {
+                            setIsStarClicked(true);
+                          })
+                          .catch((error) => {
+                          console.log(error);
+                          })
+
+                        }}><span>{x.likes}</span></i>
                        
                       </div>
+                      :
+                      <div>
+                        <i className="bi bi-star" onClick={ async () => {
+                          const postId = x._id;
+                          await axios.patch(`/recipes/${postId}/dislike`)
+                          .then((response) => {
+                          console.log('response dislike',response.data.data.likes);
+                          
+                          })
+                          .then(() => {
+                            setIsStarClicked(false)
+                          })
+                          .catch((error) => {
+                          console.log(error);
+                          })
+
+                        }}><span>{x.likes}</span></i>
+                       
+                      </div>
+
                     }
                      
                   </Card.Footer>
@@ -89,48 +129,55 @@ const MiniDashboard = (props) => {
               </Col>
             );
           })}
-        {show ? (
+               {show ? (
           <Modal show={show}>
             <Modal.Header>
-              <Modal.Title>{dataModal[0]}</Modal.Title>
-              <Button  onClick={handleHide}>
-                Close Modal
-              </Button>
+              <Modal.Title><h2 className="orange-title">{dataModal[0]}</h2></Modal.Title>
+              <button className="close-button" onClick={handleHide}>
+                Close
+              </button>
             </Modal.Header>
             <Modal.Body>
             <Container>
           <Row>
             <Col xs={6}>
               <Row>
+               {/* 
+               ---------
+               da ja napravam dinamicka slikata */}
               <Card.Img
                   variant="top"
                   src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
                   className="fluid"
                 />
               </Row>
-              <Row>Best Servet for {dataModal[2]} </Row>
+              <Row><h4 className="green-text">Best Servet for <span>{dataModal[2]}</span> </h4>  </Row>
               <Row className="recipeDetailsText"><p>{dataModal[1]}</p></Row>
               
             </Col>
             <Col xs={6}>
-              <Row>Recipe details</Row>
+              <Row><h4 className="green-text">Recipe details</h4></Row>
               <Row className="recipeDetailsText"><p>{dataModal[6]}</p></Row>
             </Col>
          
           </Row>
         </Container>
+
+
               <>
-                <p>{dataModal[1]}</p>
+                
               </>
             </Modal.Body>
             <Modal.Footer>
-            <Row className="modal-footer">
-            <span> <i className="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
+              <Row className="modal-footer">
+           
+
+             <span> <i className="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
              <i className="bi bi-people"> <span> {dataModal[4]} min</span></i>  
              <i className="bi bi-star"> <span> {dataModal[5]} min</span></i> 
               </span>
             </Row>
-
+                
             </Modal.Footer>
           </Modal>
         ) : (

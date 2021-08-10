@@ -13,11 +13,11 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     fetchFresh();
-  }, []);
+  }, [isDataFetched, isStarClicked, !isStarClicked ]);
 
   useEffect(() => {
     fetchPopular();
-  }, []);
+  },  [isDataFetched, isStarClicked, !isStarClicked ]);
 
   const fetchFresh = async () => {
     await axios.get('/mainpage/fresh')
@@ -184,11 +184,46 @@ return (
                         
                       </div>
                     }
-                     {
+                    { !isStarClicked ?
                       <div>
-                        <i className="bi bi-star"><span>{x.likes}</span></i>
+                        <i className="bi bi-star" onClick={ async () => {
+                          const postId = x._id;
+                          await axios.patch(`/recipes/${postId}/like`)
+                          .then((response) => {
+                           
+                          console.log('response za liked:',response.data.data.likes);
+                          
+                          })
+                          .then(() => {
+                            setIsStarClicked(true);
+                          })
+                          .catch((error) => {
+                          console.log(error);
+                          })
+
+                        }}><span>{x.likes}</span></i>
                        
                       </div>
+                      :
+                      <div>
+                        <i className="bi bi-star" onClick={ async () => {
+                          const postId = x._id;
+                          await axios.patch(`/recipes/${postId}/dislike`)
+                          .then((response) => {
+                          console.log('response dislike',response.data.data.likes);
+                          
+                          })
+                          .then(() => {
+                            setIsStarClicked(false)
+                          })
+                          .catch((error) => {
+                          console.log(error);
+                          })
+
+                        }}><span>{x.likes}</span></i>
+                       
+                      </div>
+
                     }
                      
                   </Card.Footer>

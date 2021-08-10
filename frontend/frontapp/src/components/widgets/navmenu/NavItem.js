@@ -1,30 +1,29 @@
 import axios from 'axios';
 import { Nav } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+// import '../../../assets/styles/nav.css'
 
-const NavItem = (props) => {
-  
+const NavItem =  (props) => {
 const logout = async () => {
+ 
   await axios.get('auth/logout')
   .then(response => {
-    console.log(response);
-    localStorage.clear()
+    // console.log(response);
+     localStorage.clear()
+
   })
-  props.setUser('');
+     props.setUser('');
+
 }
 
     return (
         <>
-  <Nav className="justify-content-end" >
-    <Nav.Item>
-      <Nav.Link href="/my-recipes">My recipes</Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link href="/my-profile">My profile</Nav.Link>
-    </Nav.Item>
-    <Nav.Item>
-      <Nav.Link href="/login" onClick={logout}>Log out</Nav.Link>
-    </Nav.Item>
-  </Nav>
+  <Navbar  className="logedNav">
+    <Link to="/my-recipes">My recipes</Link>
+    <Link to="/my-profile">My profile</Link>
+    <Link to="/login" onClick={logout}>Log out</Link>
+  </Navbar>
 </>
     )
 }
