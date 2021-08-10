@@ -15,7 +15,10 @@ const submitForm = async (event) => {
 const submitLogin = async () => {
   await axios.post('/auth/login', form)
   .then((response) => {
-  localStorage.setItem('token', response.data.data)
+    console.log('datickaa',response.data.data);
+   localStorage.setItem('token', response.data.data)
+   window.location.reload();
+
   })
   .catch(err => console.log(err))
   }

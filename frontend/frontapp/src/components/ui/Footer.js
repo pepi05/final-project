@@ -9,13 +9,13 @@ const Footer = () => {
 <footer className="footer">
 <Container>    
             <Row>
-                <Col sm={4}>
+                <Col sm={3}>
                 <Logo color="white" />
                 </Col>
                     <Col sm={6}>
                     <Nav />
                     </Col>
-                <Col sm={2} className="copyright">
+                <Col sm={3} className="copyright">
                     <p>
                         Baby's Food Place <br /> copyright &copy; 2021
                     </p>
