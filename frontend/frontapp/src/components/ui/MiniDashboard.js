@@ -3,19 +3,15 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "../../assets/styles/dashboard.css";
 
-
 const MiniDashboard = (props) => {
   const [dataModal, setDataModal] = useState([]);
   const [show, setShow] = useState(false);
   const [isStarClicked, setIsStarClicked] = useState(false);
   const [items, setItems] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
-
     useEffect(() => {
             fetchBreakfast();
         }, [isDataFetched, isStarClicked, !isStarClicked]);
-    
-       
     
         const fetchBreakfast = async () => {
             await axios.get(`/recipes/${props.category}`)
@@ -29,13 +25,9 @@ const MiniDashboard = (props) => {
             })
         }
 
-
-
-
-        const dataOut = (title, description, category, preparation_time, people, likes, recipe) => {
-          let oneCard = [title, description, category, preparation_time, people, likes, recipe];
+        const dataOut = (title, description, category, preparation_time, people, likes, recipe, myFile) => {
+          let oneCard = [title, description, category, preparation_time, people, likes, recipe, myFile];
           setDataModal((x) => [ ...oneCard]);
-        
             return setShow(true);
         }
         
@@ -51,7 +43,7 @@ const MiniDashboard = (props) => {
               <Card className="card" key={x.id}>
                 <Card.Img
                   variant="top"
-                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  src={x.myFile}
                   className="fluid"
                 />
                 <Card.Body>
@@ -62,7 +54,7 @@ const MiniDashboard = (props) => {
                     variant="success"
                     className="cardButton"
                     onClick={() => {
-                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
+                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe, x.myFile);
                     }}
                   >
                      <i className="bi bi-arrow-right-short"></i>
@@ -81,7 +73,7 @@ const MiniDashboard = (props) => {
                         
                       </div>
                     }
-                                         { !isStarClicked ?
+                           { !isStarClicked ?
                       <div>
                         <i className="bi bi-star" onClick={ async () => {
                           const postId = x._id;
@@ -97,9 +89,7 @@ const MiniDashboard = (props) => {
                           .catch((error) => {
                           console.log(error);
                           })
-
-                        }}><span>{x.likes}</span></i>
-                       
+                        }}><span>{x.likes}</span></i> 
                       </div>
                       :
                       <div>
@@ -107,8 +97,7 @@ const MiniDashboard = (props) => {
                           const postId = x._id;
                           await axios.patch(`/recipes/${postId}/dislike`)
                           .then((response) => {
-                          console.log('response dislike',response.data.data.likes);
-                          
+                          console.log('response dislike',response.data.data.likes); 
                           })
                           .then(() => {
                             setIsStarClicked(false)
@@ -116,13 +105,9 @@ const MiniDashboard = (props) => {
                           .catch((error) => {
                           console.log(error);
                           })
-
                         }}><span>{x.likes}</span></i>
-                       
                       </div>
-
-                    }
-                     
+                    } 
                   </Card.Footer>
                 </Card.Body>
               </Card>
@@ -142,12 +127,9 @@ const MiniDashboard = (props) => {
           <Row>
             <Col xs={6}>
               <Row>
-               {/* 
-               ---------
-               da ja napravam dinamicka slikata */}
               <Card.Img
                   variant="top"
-                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  src={dataModal[7]}
                   className="fluid"
                 />
               </Row>
@@ -162,22 +144,14 @@ const MiniDashboard = (props) => {
          
           </Row>
         </Container>
-
-
-              <>
-                
-              </>
             </Modal.Body>
             <Modal.Footer>
               <Row className="modal-footer">
-           
-
              <span> <i className="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
              <i className="bi bi-people"> <span> {dataModal[4]} min</span></i>  
              <i className="bi bi-star"> <span> {dataModal[5]} min</span></i> 
               </span>
-            </Row>
-                
+            </Row>     
             </Modal.Footer>
           </Modal>
         ) : (

@@ -63,6 +63,7 @@ module.exports = {
         try {
           
             const newUser = await User.findOneAndReplace( { _id: req.params.userId }, {
+                myFile: req.body.myFile,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 email: req.body.email,
@@ -70,7 +71,7 @@ module.exports = {
                 password: bcrypt.hashSync(req.body.password)  ,
                 repeat_password: req.body.repeat_password
             } )
-            successResponse(res, 'User is successfully updated')    
+            successResponse(res, 'User is successfully updated', newUser)    
         } catch (error) {
             errorResponse(res, 500, error);
         } 

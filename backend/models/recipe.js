@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = mongoose.Schema({
+    myFile: {
+        type: String,
+        required: [true, 'Recipe image is required']
+    },
     title: {
         type: String,
         required: [true, 'title is required field']

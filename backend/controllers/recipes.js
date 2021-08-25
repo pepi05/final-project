@@ -5,11 +5,14 @@ const errorResponse = require('../lib/responses/errorResponse');
 module.exports = {
     createRecipe: async (req, res) => {
         try {
-            const newRecipe = await Recipe.create({...req.body, user: req.user.id });
-            successResponse(res, 'Recipe is successfully created', newRecipe);  
-        } catch (error) {
-            errorResponse(res, 500, error);
-        }
+            const recipe = await Recipe.create({
+              ...req.body,
+              user: req.user.id
+            });
+            res.status(201).json({message: "recipe is created", recipe});
+          } catch (error) {
+            res.status(500).json(error)
+          }
     },
     fetchAllRecipes: async (req, res) => {
         try {

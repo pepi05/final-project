@@ -46,13 +46,15 @@ const Dashboard = (props) => {
 const [dataModal, setDataModal] = useState([]);
 const [show, setShow] = useState(false);
 
-const dataOut = (title, description, category, preparation_time, people, likes, recipe) => {
-    let oneCard = [title, description, category, preparation_time, people, likes, recipe];
-    setDataModal((x) => [ ...oneCard]);
+const dataOut = (title, description, category, preparation_time, people, likes, recipe, myFile) => {
+    let oneCard = [title, description, category, preparation_time, people, likes, recipe, myFile];
+    setDataModal((x) => [ ...oneCard ]);
     return setShow(true);
 }
 
 const handleHide = () => setShow(false)
+
+console.log('Data modelot e :', dataModal);
 
 return (
     <Container>
@@ -65,7 +67,7 @@ return (
               <Card className="card" key={x.id}>
                 <Card.Img
                   variant="top"
-                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  src={x.myFile}
                   className="fluid"
                 />
                 <Card.Body>
@@ -76,7 +78,7 @@ return (
                     variant="success"
                     className="cardButton"
                     onClick={() => {
-                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
+                      dataOut( x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe, x.myFile);
                     }}
                   >
                      <i className="bi bi-arrow-right-short"></i>
@@ -128,13 +130,9 @@ return (
                           .catch((error) => {
                           console.log(error);
                           })
-
-                        }}><span>{x.likes}</span></i>
-                       
+                        }}><span>{x.likes}</span></i>  
                       </div>
-
-                    }
-                     
+                    } 
                   </Card.Footer>
                 </Card.Body>
               </Card>
@@ -153,7 +151,7 @@ return (
               <Card className="card" key={x.id}>
                 <Card.Img
                   variant="top"
-                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  src={x.myFile}
                   className="fluid"
                 />
                 <Card.Body>
@@ -164,12 +162,10 @@ return (
                     variant="success"
                     className="cardButton"
                     onClick={() => {
-                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe);
+                      dataOut(x.title, x.description, x.category, x.preparation_time, x.people, x.likes, x.recipe, x.myFile);
                     }}
                   >
                      <i className="bi bi-arrow-right-short"></i>
-                  
-                     
                   </Button>
                   
                   <Card.Footer className="cardFooter">
@@ -180,8 +176,7 @@ return (
                     }
                     {
                       <div>
-                        <i className="bi bi-people"> <span> {x.people} persons</span></i>
-                        
+                        <i className="bi bi-people"> <span> {x.people} persons</span></i> 
                       </div>
                     }
                     { !isStarClicked ?
@@ -190,9 +185,7 @@ return (
                           const postId = x._id;
                           await axios.patch(`/recipes/${postId}/like`)
                           .then((response) => {
-                           
                           console.log('response za liked:',response.data.data.likes);
-                          
                           })
                           .then(() => {
                             setIsStarClicked(true);
@@ -200,7 +193,6 @@ return (
                           .catch((error) => {
                           console.log(error);
                           })
-
                         }}><span>{x.likes}</span></i>
                        
                       </div>
@@ -219,13 +211,9 @@ return (
                           .catch((error) => {
                           console.log(error);
                           })
-
                         }}><span>{x.likes}</span></i>
-                       
                       </div>
-
                     }
-                     
                   </Card.Footer>
                 </Card.Body>
               </Card>
@@ -245,12 +233,9 @@ return (
           <Row>
             <Col xs={6}>
               <Row>
-               {/* 
-               ---------
-               da ja napravam dinamicka slikata */}
               <Card.Img
                   variant="top"
-                  src="https://coolwallpapers.me/picsup/2723041-pizza-4k-free-wallpaper-for-desktop.jpg"
+                  src={dataModal[7]}
                   className="fluid"
                 />
               </Row>
@@ -265,16 +250,10 @@ return (
          
           </Row>
         </Container>
-
-
-              <>
-                
-              </>
+ 
             </Modal.Body>
             <Modal.Footer>
               <Row className="modal-footer">
-           
-
              <span> <i className="bi bi-clock"> <span> {dataModal[3]} min</span></i> 
              <i className="bi bi-people"> <span> {dataModal[4]} min</span></i>  
              <i className="bi bi-star"> <span> {dataModal[5]} min</span></i> 

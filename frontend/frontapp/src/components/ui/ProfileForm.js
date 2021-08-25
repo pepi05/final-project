@@ -3,18 +3,24 @@ import Button from '../widgets/GreenButton';
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ProfileForm = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [userId, setUserId] = useState('')
+  const [fetchedUser, setFetchedUser] = useState('')
   const [form, setForm] = useState({
+    myFile: '' ,
     first_name: '',
     last_name: '',
     email: '',
-    birthday: '' ,
+    birthday:startDate ,
     password: '',
     repeat_password: ''
   } );
-  const [userId, setUserId] = useState('')
+  const [userImage, setUserImage] = useState({
+    myFile: "",
+  });
   
   useEffect(() => {
     const requestOptions = {
@@ -31,19 +37,41 @@ const ProfileForm = () => {
                 return Promise.reject(error);
             }
             setUserId(data._id);
+            setFetchedUser(data)
+            console.log('datickaa', data.myFile);
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
 }, []);
 
-  const submitForm = (event) => {
+const convertToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+};
+
+const handleFileUpload = async (e) => {
+  const file = e.target.files[0];
+  const base64 = await convertToBase64(file);
+  setUserImage({ ...userImage, myFile: base64 });
+};
+
+const putUpdateUser = async () => {
+  await axios.put(`/auth/${userId}`, form)
+  .then(response => console.log(response))
+}
+
+  const submitForm = async (event) => {
     event.preventDefault()
-    const postRegister = async () => {
-      await axios.put(`/auth/${userId}`, form)
-      .then(response => console.log(response))
-    }
-    postRegister() 
+  await  putUpdateUser() 
   }
 
   const handleChange = (event) => {
@@ -52,6 +80,8 @@ const ProfileForm = () => {
       return {
         ...state,
         [event.target.name]: event.target.value,
+        myFile: userImage.myFile,
+        
       }  
     })
   }
@@ -75,11 +105,12 @@ return (
                     width={171}
                     height={180}
                     alt="171x180"
-                    src="../avatar.png"
+                    src={form.myFile || fetchedUser.myFile}
                     roundedCircle
                   />
               </Figure>
-          <Button className={"whiteButton"} text="CHANGE AVATAR"  variant={"light"} />
+              <input  type='file' name='myFile' id="avatar-upload" onChange={handleFileUpload}  />
+              <label className="custom-file-label" htmlFor="avatar-upload"> Change avatar </label> 
           </Col>
 
           <Col xs={12} md={8}>
@@ -88,7 +119,7 @@ return (
 <Form.Label>First Name</Form.Label>
 <input
       type='text'
-      placeholder='First name'
+      placeholder={fetchedUser.first_name}
       name='first_name'
       value={form.first_name}
       onChange={handleChange}
@@ -101,7 +132,7 @@ return (
 <Form.Label>Last Name</Form.Label>
 <input
       type= 'text'
-      placeholder='Last Name'
+      placeholder={fetchedUser.last_name}
       name='last_name'
       value={form.last_name}
       onChange={handleChange}
@@ -115,7 +146,7 @@ return (
 <Form.Label>Email</Form.Label>
 <input
       type= 'email'
-      placeholder='Email'
+      placeholder={fetchedUser.email}
       name='email'
       value={form.email}
       onChange={handleChange}
