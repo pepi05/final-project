@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
+    myFile: {
+        type: String,
+    },
     first_name: {
         type: String,
         required: [true, 'First name is required']
@@ -21,7 +24,10 @@ const userSchema = mongoose.Schema({
     birthday: {
         type: String,
         required: [true, 'Select your birthday date']
-    } 
+    } ,
+    avatar: {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('User', userSchema);

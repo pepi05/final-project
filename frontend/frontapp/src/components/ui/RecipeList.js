@@ -35,16 +35,18 @@ const RecipeList = (props) => {
                         <td className="py-3 color-tr"></td>
                         <td className="py-3 color-tr">
                         <button className="custom-style" onClick={async () => {
-                            const itemId = item._id;
-                            console.log('info za item', itemId);
-                            await axios.delete(`/recipes/${item._id}`)
-                            .then((response) => {
-                                console.log(response.data);
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                            })
-                        }}> Delete </button>
+                                const itemId = item._id;
+                                console.log('info za item', itemId);
+                                await axios.delete(`/recipes/${item._id}`)
+                                .then((response) => {
+                                    console.log(response.data);
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                                window.location.reload();
+                            }
+                        }> Delete </button>
                         </td>
                           </tr>
                            }
@@ -53,7 +55,7 @@ const RecipeList = (props) => {
                 </tbody>
                 </table>
             </Container>
-        </div>
+        </div>      
 )
 }
 

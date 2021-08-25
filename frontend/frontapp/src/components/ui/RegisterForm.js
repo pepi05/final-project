@@ -4,6 +4,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import { Redirect } from "react-router-dom";
 import '../../assets/styles/calendar.css'
+import "react-datepicker/dist/react-datepicker.css";
 
 const RegisterForm = () => {
   const [startDate, setStartDate] = useState(new Date());

@@ -2,21 +2,16 @@ import axios from 'axios';
 import { Nav } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-// import '../../../assets/styles/nav.css'
 
 const NavItem =  (props) => {
 const logout = async () => {
  
   await axios.get('auth/logout')
   .then(response => {
-    // console.log(response);
      localStorage.clear()
-
   })
      props.setUser('');
-
 }
-
     return (
         <>
   <Navbar  className="logedNav">

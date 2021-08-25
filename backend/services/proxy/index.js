@@ -21,13 +21,13 @@ app.use('/auth', proxy(
     }
 ));
 
-app.use('/upload', proxy(
-    `http://localhost:${process.env.UPLOAD_PORT}`, {
-        proxyReqPathResolver: (req) => {
-            return `http://localhost:${process.env.UPLOAD_PORT}/upload${req.url}`
-        }
-    }
-));
+// app.use('/upload', proxy(
+//     `http://localhost:${process.env.UPLOAD_PORT}`, {
+//         proxyReqPathResolver: (req) => {
+//             return `http://localhost:${process.env.UPLOAD_PORT}/upload${req.url}`
+//         }
+//     }
+// ));
 
 app.use('/', proxy(
     `http://localhost:${process.env.MAINPAGE_PORT}`, {
